@@ -6,6 +6,7 @@
 </div>
 <form action="/authenticate" method="POST">
   <fieldset>
+    <input type="hidden" name="next" value="{{ next or '/'}}" />
     <div class="my-2 flex flex-col">
       <label class="text-xl" for="username">Username</label>
       <input

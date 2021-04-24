@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session, flash
+from flask import Flask, render_template, request, redirect, session, flash, url_for
 from game import Game
 
 app = Flask(__name__)
@@ -17,14 +17,15 @@ def index():
 
 @app.route("/login")
 def login():
-    return render_template("login/login.html", title="Login")
+    next_page = request.args.get("next")
+    return render_template("login/login.html", next=next_page, title="Login")
 
 
 @app.route("/logout")
 def logout():
     session["logged_user"] = None
     flash("User not logged in")
-    return redirect("/")
+    return redirect(url_for("index"))
 
 
 @app.route(
@@ -38,16 +39,17 @@ def authenticate():
         user = request.form["username"]
         session["logged_user"] = user
         flash(user + " has logged in")
-        return redirect("/")
+        next_page = request.form["next"]
+        return redirect(next_page)
     else:
         flash("Login failed, try again")
-        return redirect("/login")
+        return redirect(url_for("login"))
 
 
 @app.route("/new_game")
 def new_game():
     if not session["logged_user"]:
-        return redirect("/login")
+        return redirect(url_for("login", next=url_for("new_game")))
 
     return render_template("game/new_game.html", title="New Game")
 
@@ -65,7 +67,7 @@ def create_game():
 
     game = Game(name, category, console)
     games.append(game)
-    return redirect("/")
+    return redirect(url_for("index"))
 
 
 app.run(debug=True)
