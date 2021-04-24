@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, session, flash, url_for
 from game import Game
+from user import User
 
 app = Flask(__name__)
 app.secret_key = "gameflix"
@@ -8,6 +9,10 @@ tetris = Game("Tetris", "Arcade", "Megadrive")
 mario = Game("Super Mario", "Action", "SNES")
 pokemon = Game("Pokemon Gold", "RPG", "GBA")
 games = [tetris, mario, pokemon]
+
+paulo = User("paulo", "Paulo", "123")
+amanda = User("amanda", "Amanda", "321")
+users = {paulo.id: paulo, amanda.id: amanda}
 
 
 @app.route("/")
@@ -35,15 +40,17 @@ def logout():
     ],
 )
 def authenticate():
-    if "master" == request.form["password"]:
-        user = request.form["username"]
-        session["logged_user"] = user
-        flash(user + " has logged in")
-        next_page = request.form["next"]
-        return redirect(next_page)
-    else:
-        flash("Login failed, try again")
-        return redirect(url_for("login"))
+    username = request.form["username"]
+    if username in users:
+        user = users[username]
+        if user.password == request.form["password"]:
+            session["logged_user"] = user.id
+            flash(user.name + " has logged in")
+            next_page = request.form["next"]
+            return redirect(next_page)
+
+    flash("Login failed, try again")
+    return redirect(url_for("login"))
 
 
 @app.route("/new_game")
