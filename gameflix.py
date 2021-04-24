@@ -22,14 +22,17 @@ def index():
 
 @app.route("/login")
 def login():
+    if session["logged_user"]:
+        return redirect(url_for("index"))
     next_page = request.args.get("next")
     return render_template("login/login.html", next=next_page, title="Login")
 
 
 @app.route("/logout")
 def logout():
-    session["logged_user"] = None
-    flash("User not logged in")
+    if session["logged_user"]:
+        session["logged_user"] = None
+        flash("User logged out")
     return redirect(url_for("index"))
 
 
