@@ -1,0 +1,20 @@
+{% extends "template.html" %} {% block content %}
+<table class="text-left">
+  <thead>
+    <tr class="text-3xl">
+      <th>Name</th>
+      <th>Category</th>
+      <th>Console</th>
+    </tr>
+  </thead>
+  <tbody class="text-2xl">
+    {% for game in games %}
+    <tr>
+      <td>{{game.name}}</td>
+      <td>{{game.category}}</td>
+      <td>{{game.console}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

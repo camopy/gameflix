@@ -1,0 +1,43 @@
+{% extends "template.html" %} {% block content %}
+<form action="/create_game" method="post">
+  <fieldset>
+    <div class="my-2 flex flex-col">
+      <label class="text-xl" for="name">Name</label>
+      <input
+        class="border text-black h-8 rounded-md"
+        type="text"
+        id="name"
+        name="name"
+      />
+    </div>
+
+    <div class="my-2 flex flex-col">
+      <label class="text-xl" for="category">Category</label>
+      <input
+        class="border text-black h-8 rounded-md"
+        type="text"
+        id="category"
+        name="category"
+      />
+    </div>
+
+    <div class="my-2 flex flex-col">
+      <label class="text-xl" for="console">Console</label>
+      <input
+        class="border text-black h-8 rounded-md"
+        type="text"
+        id="console"
+        name="console"
+      />
+    </div>
+  </fieldset>
+  <div class="flex justify-end">
+    <button
+      class="bg-white font-bold text-black border rounded-md px-2"
+      type="submit"
+    >
+      Save
+    </button>
+  </div>
+</form>
+{% endblock %}
