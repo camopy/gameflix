@@ -1,0 +1,38 @@
+{% extends "template.html" %} {% block content %}
+<div class="mt-10 mb-4">
+  <h1 class="font-bold text-5xl text-gray-400 border-b border-gray-400">
+    {{ title }}
+  </h1>
+</div>
+<form action="/authenticate" method="POST">
+  <fieldset>
+    <div class="my-2 flex flex-col">
+      <label class="text-xl" for="username">Username</label>
+      <input
+        class="border text-black h-8 rounded-md"
+        type="text"
+        id="username"
+        name="username"
+      />
+    </div>
+
+    <div class="my-2 flex flex-col">
+      <label class="text-xl" for="password">Password</label>
+      <input
+        class="border text-black h-8 rounded-md"
+        type="password"
+        id="password"
+        name="password"
+      />
+    </div>
+  </fieldset>
+  <div class="flex justify-end">
+    <button
+      class="bg-white font-bold text-black border rounded-md px-2"
+      type="submit"
+    >
+      Login
+    </button>
+  </div>
+</form>
+{% endblock %}
