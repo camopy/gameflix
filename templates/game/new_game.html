@@ -4,7 +4,7 @@
     {{ title }}
   </h1>
 </div>
-<form action="/create_game" method="post">
+<form action="{{ url_for('create_game') }}" method="post">
   <fieldset>
     <div class="my-2 flex flex-col">
       <label class="text-xl" for="name">Name</label>
