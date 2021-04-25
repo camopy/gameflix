@@ -14,7 +14,16 @@
         <li class="alert alert-success">{{ message }}</li>
         {% endfor %}
       </ul>
-      {% endif %} {% endwith %} {% block content %}{% endblock %}
+      {% endif %} {% endwith %} {% with username = session['logged_user'] %} {%
+      if username %}
+      <div class="flex justify-end my-2">
+        <button><a href="{{url_for('logout')}}">Logout</a></button>
+      </div>
+      {% else %} {% if 'login' not in url_for(request.endpoint) %}
+      <div class="flex justify-end my-2">
+        <button><a href="{{url_for('login')}}">Login</a></button>
+      </div>
+      {% endif %} {% endif %} {% endwith %} {% block content %}{% endblock %}
     </div>
   </body>
 </html>
