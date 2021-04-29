@@ -4,7 +4,19 @@
     {{ title }}
   </h1>
 </div>
-<form action="{{ url_for('create_game') }}" method="post">
+<form
+  action="{{ url_for('create_game') }}"
+  method="post"
+  enctype="multipart/form-data"
+>
+  <figure>
+    <img src="{{ url_for('image', file_name='default.jpg') }}" alt="" />
+    <figcaption>
+      <label>
+        <input type="file" name="game_image" accept=".jpg" />
+      </label>
+    </figcaption>
+  </figure>
   <fieldset>
     <div class="my-2 flex flex-col">
       <label class="text-xl" for="name">Name</label>

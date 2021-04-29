@@ -20,3 +20,7 @@ class Game:
     @property
     def id(self):
         return self._id
+
+    @id.setter
+    def id(self, generated_id):
+        self._id = generated_id

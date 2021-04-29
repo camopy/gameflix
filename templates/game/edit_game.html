@@ -5,6 +5,14 @@
   </h1>
 </div>
 <form action="{{ url_for('save_game') }}" method="post">
+  <figure>
+    <img src="{{ url_for('image', file_name=game_cover) }}" alt="" />
+    <figcaption>
+      <label>
+        <input type="file" name="game_image" accept=".jpg" />
+      </label>
+    </figcaption>
+  </figure>
   <input type="hidden" name="id" value="{{ game.id }}" />
   <fieldset>
     <div class="my-2 flex flex-col">

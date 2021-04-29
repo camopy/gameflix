@@ -1,4 +1,14 @@
-from flask import Flask, render_template, request, redirect, session, flash, url_for
+import os
+from flask import (
+    Flask,
+    render_template,
+    request,
+    redirect,
+    session,
+    flash,
+    url_for,
+    send_from_directory,
+)
 from flask_mysqldb import MySQL
 from models.game import Game
 from models.user import User
@@ -6,6 +16,9 @@ from dao import GameDao, UserDao
 
 app = Flask(__name__)
 app.secret_key = "gameflix"
+
+app.config["UPLOAD_PATH"] = os.path.dirname(os.path.abspath(__file__)) + "/uploads"
+app.config["GAME_COVERS_UPLOAD_PATH"] = f"{app.config['UPLOAD_PATH']}/game_covers"
 
 app.config["MYSQL_HOST"] = "localhost"
 app.config["MYSQL_USER"] = "camopy"
@@ -75,7 +88,17 @@ def edit_game(id):
 
     game = game_dao.find_by_id(id)
 
-    return render_template("game/edit_game.html", title="Editing Game", game=game)
+    return render_template(
+        "game/edit_game.html",
+        title="Editing Game",
+        game=game,
+        game_cover=f"{id}.jpg",
+    )
+
+
+@app.route("/uploads/<file_name>")
+def image(file_name):
+    return send_from_directory(app.config["GAME_COVERS_UPLOAD_PATH"], file_name)
 
 
 @app.route(
@@ -90,8 +113,16 @@ def create_game():
     console = request.form["console"]
 
     game = Game(name, category, console)
-    game_dao.save(game)
+    game = game_dao.save(game)
+
+    upload_game_image(request.files["game_image"], game.id)
+
     return redirect(url_for("index"))
+
+
+def upload_game_image(game_image, game_id):
+    game_covers_upload_path = app.config["GAME_COVERS_UPLOAD_PATH"]
+    game_image.save(f"{game_covers_upload_path}/{game_id}.jpg")
 
 
 @app.route(
