@@ -16,3 +16,7 @@ class Game:
     @property
     def console(self):
         return self._console
+
+    @property
+    def id(self):
+        return self._id

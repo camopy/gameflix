@@ -2,12 +2,16 @@
 <div class="flex justify-around mb-4">
   <h1 class="font-bold text-5xl m-10 text-red-600">{{ title|upper }}</h1>
 </div>
+<div class="my-2">
+  <a class="p-2 bg-gray-500" href="{{ url_for('new_game') }}">New Game</a>
+</div>
 <table class="text-left">
   <thead>
     <tr class="text-3xl">
       <th>Name</th>
       <th>Category</th>
       <th>Console</th>
+      <th>Actions</th>
     </tr>
   </thead>
   <tbody class="text-2xl">
@@ -16,6 +20,10 @@
       <td>{{game.name}}</td>
       <td>{{game.category}}</td>
       <td>{{game.console}}</td>
+      <td>
+        <a href="{{ url_for('edit_game', id=game.id )}}">Edit</a>
+        <a href="{{ url_for('delete_game', id=game.id )}}">Delete</a>
+      </td>
     </tr>
     {% endfor %}
   </tbody>

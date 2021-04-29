@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}"
   </head>
   <body class="bg-black text-white">
-    <div class="mx-auto flex flex-col max-w-xl">
+    <div class="mx-auto flex flex-col max-w-2xl">
       {% with messages = get_flashed_messages() %} {% if messages %}
       <ul id="messages" class="list-unstyled">
         {% for message in messages %}
