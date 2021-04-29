@@ -11,7 +11,7 @@ from models.game import Game
 from models.user import User
 from dao import GameDao, UserDao
 from gameflix import app, db
-from game_cover import delete_game_cover, get_game_cover, upload_game_cover
+from helpers.game_cover import delete_game_cover, get_game_cover, upload_game_cover
 
 game_dao = GameDao(db)
 user_dao = UserDao(db)
