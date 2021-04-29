@@ -15,7 +15,8 @@
     "devdb",
     "lastrowid",
     "mysqldb",
-    "paulo"
+    "paulo",
+    "pyfile"
   ],
   "sqltools.connections": [
     {
