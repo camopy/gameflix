@@ -126,12 +126,12 @@ def create_game():
 def upload_game_cover(game_cover, game_id):
     game_covers_upload_path = app.config["GAME_COVERS_UPLOAD_PATH"]
     timestamp = time.time()
-    game_cover.save(f"{game_covers_upload_path}/{game_id}-{timestamp}.jpg")
+    game_cover.save(f"{game_covers_upload_path}/cover{game_id}-{timestamp}.jpg")
 
 
 def get_game_cover(id):
     for file_name in os.listdir(app.config["GAME_COVERS_UPLOAD_PATH"]):
-        if f"{id}" in file_name:
+        if f"cover{id}" in file_name:
             return file_name
 
 
