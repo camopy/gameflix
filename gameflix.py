@@ -16,16 +16,7 @@ from models.user import User
 from dao import GameDao, UserDao
 
 app = Flask(__name__)
-app.secret_key = "gameflix"
-
-app.config["UPLOAD_PATH"] = os.path.dirname(os.path.abspath(__file__)) + "/uploads"
-app.config["GAME_COVERS_UPLOAD_PATH"] = f"{app.config['UPLOAD_PATH']}/game_covers"
-
-app.config["MYSQL_HOST"] = "localhost"
-app.config["MYSQL_USER"] = "camopy"
-app.config["MYSQL_PASSWORD"] = "devdb"
-app.config["MYSQL_DB"] = "gameflix"
-app.config["MYSQL_PORT"] = 3306
+app.config.from_pyfile("config/config.py")
 
 db = MySQL(app)
 game_dao = GameDao(db)
