@@ -5,56 +5,63 @@
   </h1>
 </div>
 <form action="{{ url_for('save_game') }}" method="post">
-  <figure>
-    <img src="{{ url_for('image', file_name=game_cover) }}" alt="" />
-    <figcaption>
-      <label>
-        <input type="file" name="game_image" accept=".jpg" />
-      </label>
-    </figcaption>
-  </figure>
-  <input type="hidden" name="id" value="{{ game.id }}" />
-  <fieldset>
-    <div class="my-2 flex flex-col">
-      <label class="text-xl" for="name">Name</label>
-      <input
-        class="border text-black h-8 rounded-md"
-        type="text"
-        id="name"
-        name="name"
-        value="{{ game.name }}"
-      />
+  <div class="flex">
+    <div class="w-1/3">
+      <figure>
+        <img src="{{ url_for('image', file_name=game_cover) }}" alt="" />
+        <figcaption>
+          <label class="justify-center flex">
+            Change cover
+            <input type="file" name="game_image" class="hidden" accept=".jpg" />
+          </label>
+        </figcaption>
+      </figure>
+      <input type="hidden" name="id" value="{{ game.id }}" />
     </div>
+    <div class="w-full ml-2">
+      <fieldset>
+        <div class="my-2 flex flex-col">
+          <label class="text-xl" for="name">Name</label>
+          <input
+            class="border text-black h-8 rounded-md"
+            type="text"
+            id="name"
+            name="name"
+            value="{{ game.name }}"
+          />
+        </div>
 
-    <div class="my-2 flex flex-col">
-      <label class="text-xl" for="category">Category</label>
-      <input
-        class="border text-black h-8 rounded-md"
-        type="text"
-        id="category"
-        name="category"
-        value="{{ game.category }}"
-      />
-    </div>
+        <div class="my-2 flex flex-col">
+          <label class="text-xl" for="category">Category</label>
+          <input
+            class="border text-black h-8 rounded-md"
+            type="text"
+            id="category"
+            name="category"
+            value="{{ game.category }}"
+          />
+        </div>
 
-    <div class="my-2 flex flex-col">
-      <label class="text-xl" for="console">Console</label>
-      <input
-        class="border text-black h-8 rounded-md"
-        type="text"
-        id="console"
-        name="console"
-        value="{{ game.console }}"
-      />
+        <div class="my-2 flex flex-col">
+          <label class="text-xl" for="console">Console</label>
+          <input
+            class="border text-black h-8 rounded-md"
+            type="text"
+            id="console"
+            name="console"
+            value="{{ game.console }}"
+          />
+        </div>
+      </fieldset>
+      <div class="flex justify-end">
+        <button class="bg-white font-bold text-black px-2" type="submit">
+          Save
+        </button>
+        <a class="ml-2 bg-gray-500 font-bold px-2" href="{{ url_for('index') }}"
+          >Cancel</a
+        >
+      </div>
     </div>
-  </fieldset>
-  <div class="flex justify-end">
-    <button class="bg-white font-bold text-black px-2" type="submit">
-      Save
-    </button>
-    <a class="ml-2 bg-gray-500 font-bold px-2" href="{{ url_for('index') }}"
-      >Cancel</a
-    >
   </div>
 </form>
 {% endblock %}

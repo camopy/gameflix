@@ -9,52 +9,57 @@
   method="post"
   enctype="multipart/form-data"
 >
-  <figure>
-    <img src="{{ url_for('image', file_name='default.jpg') }}" alt="" />
-    <figcaption>
-      <label>
-        <input type="file" name="game_image" accept=".jpg" />
-      </label>
-    </figcaption>
-  </figure>
-  <fieldset>
-    <div class="my-2 flex flex-col">
-      <label class="text-xl" for="name">Name</label>
-      <input
-        class="border text-black h-8 rounded-md"
-        type="text"
-        id="name"
-        name="name"
-      />
-    </div>
+  <div class="flex">
+    <figure class="w-1/3">
+      <img src="{{ url_for('image', file_name='default.jpg') }}" alt="" />
+      <figcaption>
+        <label class="flex justify-center">
+          Change cover
+          <input class="hidden" type="file" name="game_image" accept=".jpg" />
+        </label>
+      </figcaption>
+    </figure>
+    <div class="w-full ml-2">
+      <fieldset>
+        <div class="my-2 flex flex-col">
+          <label class="text-xl" for="name">Name</label>
+          <input
+            class="border text-black h-8 rounded-md"
+            type="text"
+            id="name"
+            name="name"
+          />
+        </div>
 
-    <div class="my-2 flex flex-col">
-      <label class="text-xl" for="category">Category</label>
-      <input
-        class="border text-black h-8 rounded-md"
-        type="text"
-        id="category"
-        name="category"
-      />
-    </div>
+        <div class="my-2 flex flex-col">
+          <label class="text-xl" for="category">Category</label>
+          <input
+            class="border text-black h-8 rounded-md"
+            type="text"
+            id="category"
+            name="category"
+          />
+        </div>
 
-    <div class="my-2 flex flex-col">
-      <label class="text-xl" for="console">Console</label>
-      <input
-        class="border text-black h-8 rounded-md"
-        type="text"
-        id="console"
-        name="console"
-      />
+        <div class="my-2 flex flex-col">
+          <label class="text-xl" for="console">Console</label>
+          <input
+            class="border text-black h-8 rounded-md"
+            type="text"
+            id="console"
+            name="console"
+          />
+        </div>
+      </fieldset>
+      <div class="flex justify-end">
+        <button class="bg-white font-bold text-black px-2" type="submit">
+          Save
+        </button>
+        <a class="ml-2 bg-gray-500 font-bold px-2" href="{{ url_for('index') }}"
+          >Cancel</a
+        >
+      </div>
     </div>
-  </fieldset>
-  <div class="flex justify-end">
-    <button class="bg-white font-bold text-black px-2" type="submit">
-      Save
-    </button>
-    <a class="ml-2 bg-gray-500 font-bold px-2" href="{{ url_for('index') }}"
-      >Cancel</a
-    >
   </div>
 </form>
 {% endblock %}
