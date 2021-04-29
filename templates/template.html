@@ -24,6 +24,14 @@
         <button><a href="{{url_for('login')}}">Login</a></button>
       </div>
       {% endif %} {% endif %} {% endwith %} {% block content %}{% endblock %}
+      <script
+        type="text/javascript"
+        src="{{ url_for('static', filename='jquery.js') }}"
+      ></script>
+      <script
+        type="text/javascript"
+        src="{{ url_for('static', filename='app.js') }}"
+      ></script>
     </div>
   </body>
 </html>

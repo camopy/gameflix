@@ -1,4 +1,5 @@
 import os
+import time
 from flask import (
     Flask,
     render_template,
@@ -88,11 +89,13 @@ def edit_game(id):
 
     game = game_dao.find_by_id(id)
 
+    new_game_cover = get_game_cover(id)
+
     return render_template(
         "game/edit_game.html",
         title="Editing Game",
         game=game,
-        game_cover=f"{id}.jpg",
+        game_cover=new_game_cover or "default.jpg",
     )
 
 
@@ -115,14 +118,26 @@ def create_game():
     game = Game(name, category, console)
     game = game_dao.save(game)
 
-    upload_game_image(request.files["game_image"], game.id)
+    upload_game_cover(request.files["game_cover"], game.id)
 
     return redirect(url_for("index"))
 
 
-def upload_game_image(game_image, game_id):
+def upload_game_cover(game_cover, game_id):
     game_covers_upload_path = app.config["GAME_COVERS_UPLOAD_PATH"]
-    game_image.save(f"{game_covers_upload_path}/{game_id}.jpg")
+    timestamp = time.time()
+    game_cover.save(f"{game_covers_upload_path}/{game_id}-{timestamp}.jpg")
+
+
+def get_game_cover(id):
+    for file_name in os.listdir(app.config["GAME_COVERS_UPLOAD_PATH"]):
+        if f"{id}" in file_name:
+            return file_name
+
+
+def delete_game_cover(id):
+    game_cover = get_game_cover(id)
+    os.remove(os.path.join(app.config["GAME_COVERS_UPLOAD_PATH"], game_cover))
 
 
 @app.route(
@@ -137,7 +152,13 @@ def save_game():
     console = request.form["console"]
 
     game = Game(name, category, console, id=request.form["id"])
+
+    game_cover = request.files["game_cover"]
+    delete_game_cover(game.id)
+    upload_game_cover(game_cover, game.id)
+
     game_dao.save(game)
+
     return redirect(url_for("index"))
 
 
