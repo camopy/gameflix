@@ -1,28 +1,32 @@
 from flask import Flask, render_template, request, redirect, session, flash, url_for
-from game import Game
-from user import User
+from flask_mysqldb import MySQL
+from models.game import Game
+from models.user import User
+from dao import GameDao, UserDao
 
 app = Flask(__name__)
 app.secret_key = "gameflix"
 
-tetris = Game("Tetris", "Arcade", "Megadrive")
-mario = Game("Super Mario", "Action", "SNES")
-pokemon = Game("Pokemon Gold", "RPG", "GBA")
-games = [tetris, mario, pokemon]
+app.config["MYSQL_HOST"] = "localhost"
+app.config["MYSQL_USER"] = "camopy"
+app.config["MYSQL_PASSWORD"] = "devdb"
+app.config["MYSQL_DB"] = "gameflix"
+app.config["MYSQL_PORT"] = 3306
 
-paulo = User("paulo", "Paulo", "123")
-amanda = User("amanda", "Amanda", "321")
-users = {paulo.id: paulo, amanda.id: amanda}
+db = MySQL(app)
+game_dao = GameDao(db)
+user_dao = UserDao(db)
 
 
 @app.route("/")
 def index():
-    return render_template("index.html", title="Gameflix", games=games)
+    game_list = game_dao.list()
+    return render_template("index.html", title="Gameflix", games=game_list)
 
 
 @app.route("/login")
 def login():
-    if "logged_user" in session:
+    if "logged_user" in session and session["logged_user"]:
         return redirect(url_for("index"))
     next_page = request.args.get("next")
     return render_template("login/login.html", next=next_page, title="Login")
@@ -44,8 +48,8 @@ def logout():
 )
 def authenticate():
     username = request.form["username"]
-    if username in users:
-        user = users[username]
+    user = user_dao.find_by_id(username)
+    if user:
         if user.password == request.form["password"]:
             session["logged_user"] = user.id
             flash(user.name + " has logged in")
@@ -76,7 +80,7 @@ def create_game():
     console = request.form["console"]
 
     game = Game(name, category, console)
-    games.append(game)
+    game_dao.save(game)
     return redirect(url_for("index"))
 
 

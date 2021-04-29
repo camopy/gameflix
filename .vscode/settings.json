@@ -6,9 +6,30 @@
   "python.testing.nosetestsEnabled": false,
   "python.testing.pytestEnabled": true,
   "cSpell.words": [
+    "Camopy",
     "Gameflix",
+    "Inno",
+    "Magalhaes",
     "SNES",
     "Tetris",
+    "devdb",
+    "lastrowid",
+    "mysqldb",
     "paulo"
+  ],
+  "sqltools.connections": [
+    {
+      "mysqlOptions": {
+        "authProtocol": "default"
+      },
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 3306,
+      "driver": "MySQL",
+      "name": "Gameflix",
+      "database": "gameflix",
+      "username": "camopy",
+      "password": "devdb"
+    }
   ]
 }
