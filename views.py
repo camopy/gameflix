@@ -61,7 +61,7 @@ def authenticate():
 
 @app.route("/new_game")
 def new_game():
-    if not session["logged_user"] or session["logged_user"] == None:
+    if not "logged_user" in session or session["logged_user"] == None:
         return redirect(url_for("login", next=url_for("new_game")))
 
     return render_template("game/new_game.html", title="New Game")
@@ -69,7 +69,7 @@ def new_game():
 
 @app.route("/edit_game/<int:id>")
 def edit_game(id):
-    if not session["logged_user"] or session["logged_user"] == None:
+    if not "logged_user" in session or session["logged_user"] == None:
         return redirect(url_for("login", next=url_for("new_game")))
 
     game = game_dao.find_by_id(id)
